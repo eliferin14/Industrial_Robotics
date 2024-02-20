@@ -1,2 +1,2 @@
-# Industrial_Robotics
-programming exercises with Adept robots
+# Industrial Robotics
+Programming exercises with Adept robots
