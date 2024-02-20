@@ -1,0 +1,92 @@
+
+.PROGRAM arm()
+;
+; ABSTRACT:  
+;
+; INPUTS:       
+;
+; OUTPUTS:      
+;
+; SIDE EFFECTS: 
+;
+; DATA STRUCT:  
+;
+; MISC:  Program created in ACE version 3.8.3.50
+;
+;* Copyright (c) 2023 by {company name}
+        
+        ATTACH()
+        
+        SPEED 10 ALWAYS
+        TOOL TRANS(0, 0, 110)
+        
+        SET h = TRANS(300,0,250,0,180,180)
+        
+        SET pick1 = TRANS(317,102,193,0,180,180) ;x:317 y: 102 z: 193 , 0 180 180
+        
+        
+        SET release3 = TRANS(517,102,263,-90,-90,0)
+        SET wp1 = release3:TRANS(160,0,-50)
+        SET wp2 = wp1:TRANS(0,0,90,0,-90,0)
+        SET wp3 = wp2:TRANS(0,0,90,0,-90,0)
+        SET pick3 = release3:TRANS(0,0,0,180,180,0)
+        SET release1 = TRANS(373,-131,195,0,180,45) ; final release
+        
+        
+        MOVE h
+        BREAK
+        OPENI
+        APPRO pick1,50
+        BREAK
+        MOVES pick1
+        BREAK
+        CLOSEI
+        DELAY 0.5
+        DEPARTS 50
+        BREAK
+        MOVES release3:TRANS(200,0,0,0,0,0)
+        BREAK
+        MOVES release3 ;abbassare qui
+        BREAK
+        OPENI
+        DELAY 0.5
+        DEPARTS 50
+        BREAK
+        CLOSEI
+        MOVES wp1
+        BREAK
+        MOVE wp2 ;girare il gripper qui
+        BREAK
+        MOVE wp3 ;girare il gripper qui
+        BREAK
+        ;MOVES here:TRANS(0,0,0,180,180,0) ;girare il gripper qui
+        ;BREAK
+        APPRO pick3,50
+        BREAK
+        OPENI
+        BREAK
+        MOVES pick3
+        BREAK
+        CLOSEI
+        DELAY 0.5
+        MOVES pick3:TRANS(50,0,0)
+        BREAK
+        APPRO release1,50
+        BREAK
+        MOVES release1
+        BREAK
+        OPENI
+        DELAY 0.5
+        DEPARTS 50
+        BREAK
+        MOVE h
+        BREAK
+      
+        
+        
+        
+        DETACH ()
+        
+  
+
+.END

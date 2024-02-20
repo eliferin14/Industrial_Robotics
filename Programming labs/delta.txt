@@ -1,0 +1,94 @@
+.PROGRAM delta()
+;
+; ABSTRACT:  
+;
+; INPUTS:       
+;
+; OUTPUTS:      
+;
+; SIDE EFFECTS: 
+;
+; DATA STRUCT:  
+;
+; MISC:  Program created in ACE version 3.7.3.250
+;
+;* Copyright (c) 2023 by {company name}
+
+        
+        ATTACH ()
+        
+        ENABLE BELT
+        SETDEVICE (0,0, ,0)
+        WHILE LATCHED(-1) DO
+        END
+        
+        sf=-0.25
+        dz=45
+        
+        SPEED 50 ALWAYS
+        
+        SET loch=TRANS(-0, 0, -800, 0, 180,180)
+        
+        SET ref=TRANS(-800, 0, -900, 0, 180,180)
+        
+        DEFBELT %locbelt=ref, 1, 1, sf
+        
+        WINDOW %locbelt= TRANS(500,500,0), TRANS(-500,-500,0)
+        
+        SET locplace=loch:TRANS(0,450, 0)
+        
+        
+        
+        
+        SIGNAL (-6)
+        SIGNAL (5)
+        
+        
+        WAIT SIG(1004)
+        
+        SIGNAL (-5)
+        
+        event=LATCHED(-1)
+        
+        WHILE NOT event DO
+            WAIT
+            event=LATCHED(-1)
+            
+        END
+        
+        ; turn on red led
+        SIGNAL (6)
+        
+        SETBELT %locbelt= DEVICE(0,0, ,4)
+        
+        WAIT (DEVICE(0,0, ,1) - DEVICE(0,0, ,4)) * sf > 300
+        
+        SIGNAL (-6)
+       
+        
+        
+        APPRO %locbelt:TRANS(-100,0,0), dz
+        BREAK
+        MOVES %locbelt:TRANS(-100,0,0)
+        BREAK
+        CLOSEI
+        DELAY 0.5
+        DEPARTS dz
+        BREAK
+        
+        APPRO locplace, dz
+        BREAK
+        MOVES locplace
+        BREAK
+        OPENI
+        DELAY 0.5
+        DEPARTS dz
+        BREAK
+        
+        MOVE loch
+        
+        DETACH ()
+        
+        
+        
+.END

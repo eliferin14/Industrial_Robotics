@@ -1,0 +1,72 @@
+.PROGRAM scara()
+;
+; ABSTRACT:  
+;
+; INPUTS:       
+;
+; OUTPUTS:      
+;
+; SIDE EFFECTS: 
+;
+; DATA STRUCT:  
+;
+; MISC:  Program created in version 4.4.3.200
+;
+;* Copyright (c) 2023 by {company name}
+
+        ATTACH ()
+        ;TOOL TRANS(0,0,60)
+        SPEED 10 ALWAYS
+        SET lochome = TRANS(470,-170,200,0,180,180)
+        SET locpick = TRANS(470,-170,135,0,180,180)
+        SET locplace = TRANS(265,45,136,0,180,45)
+
+        dz = 60
+        dx = 100
+        dalpha = 90
+        dplace = 100
+
+        MOVES lochome
+        BREAK
+        OPENI
+
+        SIGNAL (-2)
+        SIGNAL (3)
+        WAIT SIG(1009)
+
+
+
+
+        FOR i = 1 TO 4
+            APPRO locpick, dz
+            BREAK
+            MOVES locpick
+            BREAK
+            CLOSEI
+            DELAY 0.5
+            DEPARTS dz
+            BREAK
+
+            APPRO locplace, dz
+            BREAK
+            MOVES locplace
+            BREAK
+            OPENI
+            DELAY 0.5
+            DEPARTS dz
+            BREAK
+
+            SET locplace = locplace:TRANS(dplace,dplace,0,dalpha,0,0)
+            SET locpick = locpick:TRANS(-dx,0,0,0,0,0)
+
+        END
+
+        OPENI
+        MOVES lochome
+
+        SIGNAL (-3)
+        DETACH ()
+
+
+
+.END
